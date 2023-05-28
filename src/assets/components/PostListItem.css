@@ -1,0 +1,68 @@
+
+  .post-cards{
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+    /* box-shadow:  10px 10px rgba(0, 0, 0, 0.2); */
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset; */
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    padding: 1em;
+    padding-top: 15px;
+  }
+  
+  .card-title-textarea {
+    background: transparent;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    /* background-color: rgb(163, 213, 217) */
+  }
+  .edit-mode {
+    background-color: rgb(163, 213, 217)
+  }
+
+.card-body-textarea{
+  border: none;
+  background: transparent;
+  text-align: center;
+  height: 150px;
+}
+
+  #idInput{
+    
+    cursor: pointer;
+    background-color: grey;
+    text-align: center;
+  }
+  #noEdit{
+    border: none;
+    outline: none;
+    text-align: center;
+  }
+  
+  #editableTitle, #noeditableTitle {
+    border: none;
+    resize: none
+  }
+  #noeditableTitle{
+    user-select: none;
+    
+  }
+  #editableBody{
+    border: none;
+    resize: none;
+  }
+  #noeditableBody{
+    resize: none;
+    user-select: none;
+  }
+  
+  
+  
+  .auto-height {
+    height: auto;
+  }
+  
+  .e-card {
+    background: rgb(163, 213, 217) !important;
+    width: 590px;
+  }
+  

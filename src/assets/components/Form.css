@@ -1,0 +1,6 @@
+.formCard {
+    width: 590px;
+    padding: 4em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: rgb(163, 213, 217) !important;
+  }

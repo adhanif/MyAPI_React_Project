@@ -1,56 +1,12 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* max-width: 1280px; */
+  /* margin: 0 auto; */
+  /* padding: 2rem; */
   text-align: center;
+  font-family: cursive;
+  /* background-color: black; */
 }
 
-.card {
-  padding: 2em;
-}
-
-
-
-#idInput{
-  
-  cursor: pointer;
-  background-color: grey;
-  text-align: center;
-}
-#noEdit{
-  border: none;
-  outline: none;
-  text-align: center;
-}
-
-#editableTitle, #noeditableTitle {
-  border: none;
-  resize: none
-}
-#noeditableTitle{
-  user-select: none;
-  
-}
-#editableBody{
-  border: none;
-  resize: none;
-}
-#noeditableBody{
-  resize: none;
-  user-select: none;
-}
-
-.formCard {
-  width: 550px;
-  
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.auto-height {
-  height: auto;
-}
-
-.e-card {
-  background: rgb(163, 213, 217) !important;
- 
-}
+/* body {
+  font-family: Arial, sans-serif;
+} */

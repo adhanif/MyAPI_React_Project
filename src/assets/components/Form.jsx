@@ -1,11 +1,13 @@
 import { Button, Card, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import "./Form.css";
 export default function Form1({ setPostLists, postLists }) {
-  const [userId, setUserId] = useState();
-  const [userTitle, setTitle] = useState();
-  const [userBody, setuserBody] = useState();
-
+  const [userId, setUserId] = useState("");
+  const [userTitle, setTitle] = useState("");
+  const [userBody, setuserBody] = useState("");
+  const url = "https://jsonplaceholder.typicode.com/";
   // to create post
   const form = {
     userId: Number(userId),
@@ -15,19 +17,23 @@ export default function Form1({ setPostLists, postLists }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post(url + "posts", form)
-      .then((response) => {
-        // console.log([...postLists, response.data]);
-        // console.log(response.data);
-        setPostLists([...postLists, response.data]);
-        setUserId("");
-        setTitle("");
-        setuserBody("");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (userId != "" && userTitle != "" && userBody != "") {
+      axios
+        .post(url + "posts", form)
+        .then((response) => {
+          // console.log([...postLists, response.data]);
+          // console.log(response.data);
+          setPostLists([...postLists, response.data]);
+          setUserId("");
+          setTitle("");
+          setuserBody("");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("Please Enter the Input Values");
+    }
   };
 
   function handleUserId(e) {
@@ -43,7 +49,7 @@ export default function Form1({ setPostLists, postLists }) {
   return (
     <Card className="mb-5 formCard">
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formUserId">
           <Form.Control
             type="text"
             value={userId}
@@ -51,7 +57,7 @@ export default function Form1({ setPostLists, postLists }) {
             placeholder="Add ID"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formUserTitle">
           <Form.Control
             type="text"
             value={userTitle}
@@ -59,7 +65,7 @@ export default function Form1({ setPostLists, postLists }) {
             placeholder="Add Title"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formUserBody">
           <Form.Control
             type="text"
             value={userBody}

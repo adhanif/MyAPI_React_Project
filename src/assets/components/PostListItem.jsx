@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Button, Card, Form, Row, Col } from "react-bootstrap";
+import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import ShowCommentBtn from "./ShowCommentBtn";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./PostListItem.css";
 
 export default function PostItem({ post, setPostLists, postLists }) {
   const url = "https://jsonplaceholder.typicode.com/";
@@ -9,7 +11,10 @@ export default function PostItem({ post, setPostLists, postLists }) {
   // const [editableId, setEditableId] = useState(post.id);
   const [editableTitle, setEditableTitle] = useState(post.title);
   const [editableBody, setEditableBody] = useState(post.body);
-
+  const [commentsInfo, setCommentsInfo] = useState([]); // for prob from child (ShowCommentBtn)
+  const [ShowCommentinfo, setShowCommentinfo] = useState([]); //for prob from child (ShowCommentBtn)
+  const [showUserInfo, setShowUserInfo] = useState();
+  const [hideUserInfo, setHideUserInfo] = useState("show");
   function turnOnEditMode() {
     setIsEditMode(true);
   }
@@ -52,10 +57,8 @@ export default function PostItem({ post, setPostLists, postLists }) {
       .catch((err) => {
         console.log(err);
       });
-
-      console.log(postLists)
   }
-  
+
   // function handleIdChange(e) {
   //   setEditableId(e.target.value);
   // }
@@ -68,56 +71,126 @@ export default function PostItem({ post, setPostLists, postLists }) {
     setEditableBody(e.target.value);
   }
 
+  // for child compoennt showCommentBtn
+  const handleCommentsInfo = (comments) => {
+    setCommentsInfo(comments);
+  };
+  const handleShowComment = (info) => {
+    setShowCommentinfo(info);
+  };
+
+  // get user information and show
+  function ShowUsersBtn(e) {
+    e.preventDefault();
+    if (hideUserInfo === "show") {
+      axios.get(url + `posts/${post.id}/comments`).then((response) => {
+        // console.log(response.data);
+        setShowUserInfo(response.data);
+        setHideUserInfo("hide");
+      });
+    } else {
+      setShowUserInfo([]);
+      setHideUserInfo("show");
+    }
+  }
+  // formCard
   return (
-    <Card className="mb-5 e-card formCard">
-      <div key={post.id} className="posts">
-        {post.id}
-        {/* <input
-          type="text"
-          value={editableId}
-          readOnly={!isEditMode}
-          onChange={handleIdChange}
-          id={isEditMode ? "editable" : "noEdit"}
-        /> */}
+    <Container className="d-flex align-items-center justify-content-center">
+      <Card className="mb-5 e-card posts-cards align-items-center post-cards">
         <Card.Body>
-          <Card.Title>
+          <Card.Title className="text-center mb-2">Post#{post.id}</Card.Title>
+          <Card.Title className="text-center ">
             <Form.Control
               as="textarea"
               value={editableTitle}
               readOnly={!isEditMode}
               onChange={handleTitleChange}
               id={isEditMode ? "editableTitle" : "noeditableTitle"}
+              // className="card-title-textarea"
+              className="card-title-textarea"
+              style={{
+                backgroundColor: isEditMode ? "#f8f8f8" : "transparent",
+                ooutline: "none",
+              }}
             />
           </Card.Title>
           <Card.Text className="auto-height">
             <Form.Control
               as="textarea"
               value={editableBody}
-              readOnly={!isEditMode}
+              // readOnly={!isEditMode}
               onChange={handleBodyChange}
               id={isEditMode ? "editableBody" : "noeditableBody"}
-              // style={{ resize: "none", height: "100%" }}
+              className="card-body-textarea"
+              style={{
+                backgroundColor: isEditMode ? "#f8f8f8" : "transparent",
+              }}
             />
           </Card.Text>
-          <Row className="mt-5">
-            <Col>
-              <Button onClick={turnOnEditMode} variant="secondary">
+          <Row className="mb-5 g-1 text-center">
+            <Col md="auto" className="mb-2">
+              <Button
+                onClick={turnOnEditMode}
+                variant="secondary"
+                className="w-100"
+              >
                 Edit
               </Button>
             </Col>
-            <Col>
-              <Button onClick={saveEditMode} variant="success">
+            <Col md="auto" className="mb-2">
+              <Button
+                onClick={saveEditMode}
+                variant="success"
+                className="w-100"
+              >
                 Save
               </Button>
             </Col>
-            <Col>
-              <Button variant="danger" onClick={deleteMode}>
+            <Col md="auto" className="mb-2">
+              <Button variant="danger" onClick={deleteMode} className="w-100">
                 Delete
               </Button>
             </Col>
+            <Col md="auto" className="mb-2">
+              <ShowCommentBtn
+                post={post}
+                setPostLists={setPostLists}
+                postLists={postLists}
+                onCommentsInfo={handleCommentsInfo}
+                onShowComments={handleShowComment}
+              />
+            </Col>
+            <Col md="auto" className="mb-2">
+              <Button variant="dark" onClick={ShowUsersBtn} className="w-100">
+                {hideUserInfo === "show"
+                  ? "Show Users Info"
+                  : "Hide Users Info"}
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            {ShowCommentinfo && (
+              <div className="comments-details">
+                {commentsInfo.map((item, index) => {
+                  return <p key={index}>{item.body}</p>;
+                })}
+              </div>
+            )}
+          </Row>
+          <Row>
+            {showUserInfo && (
+              <div>
+                {showUserInfo.map((ele, index) => (
+                  <div key={index}>
+                    <p key={index}>Name: {ele.name}</p>
+                    <p>Email: {ele.email}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </Row>
         </Card.Body>
-      </div>
-    </Card>
+      </Card>
+    </Container>
   );
 }
