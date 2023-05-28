@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Card, Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./ShowCommentBtn.css";
 
 export default function ShowUsersBtn({ post, onCommentsInfo, onShowComments }) {
   const [commentsInfo, setCommentsInfo] = useState();
@@ -16,6 +17,7 @@ export default function ShowUsersBtn({ post, onCommentsInfo, onShowComments }) {
       setShowComments(showComments);
       axios.get(url + `posts/${post.id}/comments`).then((response) => {
         setCommentsInfo(response.data);
+        // console.log(response.data);
         setShowComments(true);
         onShowComments(true); // Pass commentsInfo to the parent component
         onCommentsInfo(response.data); // Pass commentsInfo to the parent component
@@ -33,16 +35,6 @@ export default function ShowUsersBtn({ post, onCommentsInfo, onShowComments }) {
           {showComments ? "Hide Comments" : "Show Comments"}
         </Button>
       </div>
-
-      {/* <div>
-        {showComments && (
-          <div className="comments-details">
-            {commentsInfo.map((item, index) => {
-              return <p key={index}>{item.body}</p>;
-            })}
-          </div>
-        )}
-      </div> */}
     </div>
   );
 }

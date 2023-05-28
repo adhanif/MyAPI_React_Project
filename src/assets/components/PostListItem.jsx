@@ -86,6 +86,7 @@ export default function PostItem({ post, setPostLists, postLists }) {
       axios.get(url + `posts/${post.id}/comments`).then((response) => {
         // console.log(response.data);
         setShowUserInfo(response.data);
+
         setHideUserInfo("hide");
       });
     } else {
@@ -170,10 +171,12 @@ export default function PostItem({ post, setPostLists, postLists }) {
           </Row>
           <Row>
             {ShowCommentinfo && (
-              <div className="comments-details">
-                {commentsInfo.map((item, index) => {
-                  return <p key={index}>{item.body}</p>;
-                })}
+              <div>
+                {commentsInfo.map((item, index) => (
+                  <div key={index} className="showComments">
+                    <p key={index}>{item.body}</p>
+                  </div>
+                ))}
               </div>
             )}
           </Row>
@@ -181,9 +184,16 @@ export default function PostItem({ post, setPostLists, postLists }) {
             {showUserInfo && (
               <div>
                 {showUserInfo.map((ele, index) => (
-                  <div key={index}>
-                    <p key={index}>Name: {ele.name}</p>
-                    <p>Email: {ele.email}</p>
+                  <div key={index} className="userInfo">
+                    <p key={index}>
+                      {" "}
+                      <span style={{ fontWeight: "bold" }}>Name:</span>{" "}
+                      {ele.name}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Email:</span>{" "}
+                      {ele.email}
+                    </p>
                   </div>
                 ))}
               </div>

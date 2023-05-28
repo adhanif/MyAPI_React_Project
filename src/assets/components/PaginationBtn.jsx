@@ -1,16 +1,16 @@
-import React from "react";
-import Container from "react-bootstrap/Container";
+import React, { useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
-
-export default function PaginationBtn({ page, postLists, setPage }) {
-  const active = 1;
+import "./PaginationBtn.css";
+export default function PaginationBtn({ postLists, setPage, postsPerPage }) {
+  const [activePageNumber, setactivePageNumber] = useState(1); // for activating the page
   const items = [];
+  const totalPages = Math.ceil(postLists.length / postsPerPage); // Calculate the total number of pages
 
-  for (let number = 1; number <= postLists.length / 10; number++) {
+  for (let number = 1; number <= totalPages; number++) {
     items.push(
       <Pagination.Item
         key={number}
-        active={number === active}
+        active={number === activePageNumber}
         onClick={() => selectPageHandler(number)}
       >
         {number}
@@ -20,6 +20,7 @@ export default function PaginationBtn({ page, postLists, setPage }) {
 
   const selectPageHandler = (pageNumber) => {
     setPage(pageNumber);
+    setactivePageNumber(pageNumber);
   };
   return (
     <div>

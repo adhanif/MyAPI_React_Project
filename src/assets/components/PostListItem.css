@@ -66,3 +66,19 @@
     width: 590px;
   }
   
+  .userInfo{
+    border: 1px solid ;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    padding: 10px;
+    box-shadow:  10px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .showComments{
+    border: 1px solid ;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    padding-top: 20px;
+    box-shadow:  10px 10px rgba(0, 0, 0, 0.2);
+    
+  }
